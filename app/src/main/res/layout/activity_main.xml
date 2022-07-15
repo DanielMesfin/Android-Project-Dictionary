@@ -12,12 +12,12 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16sp"
+        android:layout_margin="8sp"
         app:cardBackgroundColor="@color/yellow"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp">
 
-        <androidx.appcompat.widget.SearchView
+        <SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -28,7 +28,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
+        android:layout_margin="5dp"
         android:orientation="vertical">
 
         <ListView
