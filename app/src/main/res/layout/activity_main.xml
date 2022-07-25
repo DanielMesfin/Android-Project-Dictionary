@@ -1,18 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/black"
+    tools:context=".MainActivity"
+    android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bottom_nav"
+        app:layout_constraintVertical_bias="0.0">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <android.widget.SearchView
+                android:id="@+id/searchamharic"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_layout"
+                android:queryHint="በ አማረኛ ይፈልጉ"
+                tools:ignore="MissingClass" />
+
+            <!--    <android.widget.SearchView-->
+            <!--        android:id="@+id/searchOromiffa"-->
+            <!--        android:layout_width="202dp"-->
+            <!--        android:layout_height="48dp"-->
+            <!--        android:layout_marginTop="60dp"-->
+            <!--        android:background="@drawable/bg_layout"-->
+            <!--        android:queryHint="Search Orommiffa"-->
+            <!--        android:shape="ring" />-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/listsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="150dp"
+            app:layout_constraintTop_toTopOf="@+id/bottom_nav">
+
+            <ListView
+                android:id="@+id/lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#FFC107"
+                android:dividerHeight="1dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="57dp"
+                android:background="@color/yellow"
+                android:text="አማረኛ"
+                android:textAlignment="center"
+                android:textSize="40sp" />
+
+            <ImageView
+                android:id="@+id/swap"
+                android:layout_width="123dp"
+                android:layout_height="match_parent"
+                android:background="@color/yellow"
+                android:src="@drawable/swap_lan"
+                android:clickable="true"
+                android:focusedByDefault="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="57dp"
+                android:background="@color/yellow"
+                android:text="OROMIFFA"
+                android:textAlignment="center"
+                android:textSize="40sp" />
+
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/bottom_naviagation">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+</RelativeLayout>
