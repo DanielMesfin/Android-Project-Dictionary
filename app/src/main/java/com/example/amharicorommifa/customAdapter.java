@@ -4,13 +4,18 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,22 +27,29 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class customAdapter  extends BaseAdapter {
+public class customAdapter  extends BaseAdapter{
 
    Context mcontext;
    LayoutInflater inflater;
    List<model> modellist;
    ArrayList<model> arrayList;
 
+   ////////////////////////////////////
+   ArrayList<model> arrayListAmh;
+   List<model> modelListAmh;
+   /////////////////////////////////
+
    String mainword="";
    String wdefinition="";
 
-    AppCompatActivity activity;
+    MainActivity activity;
     Resources res;
+
     public  customAdapter(Context context,List<model> modellist){
 
        mcontext=context;
@@ -45,21 +57,16 @@ public class customAdapter  extends BaseAdapter {
        inflater=LayoutInflater.from(context);
        this.arrayList=new ArrayList<model>();
        this.arrayList.addAll(modellist);
-
-
-       /*TODO : making amharic word searchable
+       this.modelListAmh=modellist;  ////////////////////////
+        this.arrayListAmh=new ArrayList<model>();  //////////////////
+        this.arrayListAmh.addAll(modelListAmh);  //////////////////////
+       /*TODO : making amharic word searchable   completed **
                 favourite functionality
                 making dialog box responsive @ rendering words
                 modifying interface
         */
-
-
-
    }
-
-
-   public  class  ViewHolder { TextView mtitleTv,mDescTv;ImageView fav;TextView mainW,defWord;}
-
+   public  class  ViewHolder { TextView mtitleTv,mDescTv;ImageView fav;}
 
     @Override
     public int getCount() { return modellist.size(); }
@@ -81,7 +88,6 @@ public class customAdapter  extends BaseAdapter {
            holder=new ViewHolder();
            view=inflater.inflate(R.layout.row,null);
 
-
            //locate the views in row .xml
            holder.mtitleTv=view.findViewById(R.id.maintitle);
            holder.mDescTv=view.findViewById(R.id.subtitle);
@@ -91,14 +97,11 @@ public class customAdapter  extends BaseAdapter {
        else{
            holder=(ViewHolder) view.getTag();
        }
-       //set the results into textviews
-       holder.mtitleTv.setText(modellist.get(Position).getTitle());
-       holder.mDescTv.setText(modellist.get(Position).getDesc());
+            //set the results into textviews
+            holder.mtitleTv.setText(modellist.get(Position).getTitle());
+            holder.mDescTv.setText(modellist.get(Position).getDesc());
 
       holder.fav=view.findViewById(R.id.favourite1);
-
-      holder.mainW=view.findViewById(R.id.mainWord);
-      holder.defWord=view.findViewById(R.id.definitionWord);
 
        res= view.getResources();
        holder.fav.setOnClickListener(new View.OnClickListener() {
@@ -115,10 +118,6 @@ public class customAdapter  extends BaseAdapter {
            }
        });
 
-
-
-
-
        //listview item clicks
        view.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -131,36 +130,20 @@ public class customAdapter  extends BaseAdapter {
 
                        //TODO CHECK LATER   // gets the seleccted list item and toasts to user
 
-//                       AlertDialog.Builder builder = new AlertDialog.Builder(mcontext);
-//                       builder.setCancelable(true);
-//                       builder.setTitle(modellist.get(Position).getTitle());
-//                       builder.setMessage(modellist.get(Position).getDesc());
-//                       builder.show();
-
                        mainword=modellist.get(Position).getTitle();
                        wdefinition=modellist.get(Position).getDesc();
 
-
-//                       holder.mainW.setText(mainword);
-//                       holder.defWord.setText(wdefinition);
-
-
-//                       getDialogView(mainword,wdefinition);
-
-
+                       MainActivity activity = new MainActivity();
 
                        BottomSheetDialog bsd = new BottomSheetDialog(mcontext,R.style.BottomSheetDialogTheme);
-//
-////                       main.setText(mainword);
-////                       def.setText(definition);
-//
-//
-////                       main.setText(mainword);
-////                       def.setText(wdefinition);
-//
+
                        View bsv = LayoutInflater.from(mcontext).inflate(R.layout.layout_bottom_sheet,(LinearLayout)view.findViewById(R.id.bottom_sheetContainer));
                        TextView mainText=bsv.findViewById(R.id.mainWord);
                        TextView defText=bsv.findViewById(R.id.definitionWord);
+
+                       TextView amhBanner = bsv.findViewById(R.id.amharicBanner);
+                       TextView orBanner = bsv.findViewById(R.id.orommiffaBanner);
+
                        ImageView fav=bsv.findViewById(R.id.favourite);
                        ImageView fav_def=bsv.findViewById(R.id.favourite1);
 
@@ -203,39 +186,31 @@ public class customAdapter  extends BaseAdapter {
                            }
                        });
 
-
+//                       if(activity.getWchanged()){
+//                           if(amhBanner.getText().equals("Amaric") && orBanner.getText().equals("Orommifa")) {
+//                               amhBanner.setText("orommiffa");
+//                               orBanner.setText("amharic");
+//                               Toast.makeText(mcontext,"texts changed @ bottom dialog sheet111",Toast.LENGTH_SHORT).show();
+//                           }
+//                           else {
+//                               amhBanner.setText("amharic");
+//                               orBanner.setText("orommiffa");
+//                               Toast.makeText(mcontext,"texts changed @ bottom dialog sheet222",Toast.LENGTH_SHORT).show();
+//                           }
+//
+//                       }
 
                        mainText.setText(mainword);
                        defText.setText(wdefinition);
 
                        bsd.setContentView(bsv);
                        bsd.show();
-
-//                       activity=new AppCompatActivity();
-//
-//                          definition def=new definition();
-//                          Bundle bundle = new Bundle();
-//
-//                       bundle.putString("main", modellist.get(Position).getTitle());
-//                       bundle.putString("def",modellist.get(Position).getDesc());
-//
-//                       def.setArguments(bundle);
-//                       activity.getFragmentManager().beginTransaction().replace(R.id.container,new definition()).commit();
-//
-//
                    }
                });
            }
        });
 
         return view;
-    }
-
-    public String getMainword(){
-        return mainword;
-    }
-    public String getDefinition(){
-        return wdefinition;
     }
 
     public  void  filter(String charText){
@@ -255,21 +230,23 @@ public class customAdapter  extends BaseAdapter {
        }
        notifyDataSetChanged();
     }
+    public  void  filterAm(String charText){
 
-//    @SuppressLint("ViewHolder")
-//    public View getDialogView(String mainword,String definition) {
-//       View view = new View(mcontext);
-//        this.inflater.inflate(R.layout.layout_bottom_sheet,null);
-//
-//        TextView mainw ,def;
-//
-//        mainw=view.findViewById(R.id.mainw);
-//        def=view.findViewById(R.id.definition);
-//
-//        mainw.setText(mainword);
-//        def.setText(definition);
-//
-//        return view;
-//    }
+        charText = charText.toLowerCase(Locale.getDefault());
+        modelListAmh.clear();
+
+        if(charText.length()==0){
+            modelListAmh.addAll(arrayListAmh);
+        }
+        else{
+            for(model model : arrayListAmh){
+                if(model.getTitle().toLowerCase(Locale.getDefault())
+                        .contains(charText)){
+                    modelListAmh.add(model);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
 }
 

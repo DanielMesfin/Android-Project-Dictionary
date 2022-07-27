@@ -2,11 +2,14 @@ package com.example.amharicorommifa;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.TextUtilsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,215 +30,115 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     ListView list;
-    customAdapter adapter;
+    customAdapter adapter,adapterAmh;
     String[] title;
     String[] desc;
     ArrayList<model> arrayList = new ArrayList<model>();
+    ArrayList<model> arrayListAmh=new ArrayList<model>();
 
-    SearchView searchOro, searchAmha;
+    SearchView search;
 
-    FragmentManager fm;
-    definition definition;
-    FragmentTransaction fragmentTransaction;
-
-    TextView main, def;
+    TextView amh,orom;
     ImageView swap;
+     int s = 0;
+     private boolean Wchanged=false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        amh=findViewById(R.id.amharic);
+        orom=findViewById(R.id.orommiffa);
         swap = findViewById(R.id.swap);
 
-
-        fm = getSupportFragmentManager();
-        definition = new definition();
-
-        searchAmha = (SearchView) findViewById(R.id.searchamharic);
-//        searchOro = (SearchView) findViewById(R.id.searchOromiffa);
-
+        search = (SearchView) findViewById(R.id.searchamharic);
 
         title = getResources().getStringArray(R.array.oromiffa_words);
         desc = getResources().getStringArray(R.array.amharic_word);
 
         list = findViewById(R.id.lv);
 
-    for (int i = 0; i < title.length; i++) {
-        model model = new model(title[i], desc[i]);
-        arrayList.add(model);
-    }
-
-
-    //pass results to listview adapter class
-    adapter = new customAdapter(this, arrayList);
-
-    //bind the adapter to the listview
-    list.setAdapter(adapter);
-
-
-//          searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String s) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String s) {
-//
-//                if(TextUtils.isEmpty(s)){
-//                    adapter.filter("");
-//                    list.clearTextFilter();
-//                }
-//                else{
-//                    adapter.filter(s);
-//                }
-//
-//
-//                return true;
-//            }
-//        });
-
-
-
-//        //for searching orommiffa
-//        searchOro.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String s) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String s) {
-//
-//                if (TextUtils.isEmpty(s)) {
-//                    adapter.filter("");
-//                    list.clearTextFilter();
-//                } else {
-//                    adapter.filter(s);
-//                }
-//
-//                return true;
-//            }
-//        });
-//
-//
-//        //for searching amharic
-//
-//        searchAmha.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String s) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String s) {
-//                if (TextUtils.isEmpty(s)) {
-//                    adapter.filter("");
-//                    list.clearTextFilter();
-//                } else {
-//                    adapter.filter(s);
-//                }
-//
-//
-//                return true;
-//            }
-//        });
-
-
-//        searchOro.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                searchOro.clearFocus();
-//                searchOro.setIconified(false);
-//                for (int i = 0; i < title.length; i++) {
-//                    model model = new model(title[i], desc[i]);
-//                    arrayList.add(model);
-//                }
-//                //pass results to listview adapter class
-//                adapter = new customAdapter(MainActivity.this, arrayList);
-//
-//                //bind the adapter to the listview
-//                list.setAdapter(adapter);
-//
-//            }
-//        });
-
-            searchAmha.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Toast.makeText(MainActivity.this,String.valueOf(swap.hasFocus()), Toast.LENGTH_SHORT).show();
-                    for (int i = 0; i < title.length; i++) {
-                        model model = new model(desc[i], title[i]);
+        for (int i = 0; i < title.length; i++) {
+                        model model = new model(title[i], desc[i]);
+                        model modelAmh = new model(desc[i],title[i]);
                         arrayList.add(model);
+                       arrayListAmh.add(modelAmh);
                     }
+        //pass results to listview adapter class
+        adapter = new customAdapter(MainActivity.this,arrayList);
+        adapterAmh=new customAdapter(MainActivity.this,arrayListAmh);
 
+        list.setAdapter(adapter);
 
-                    //pass results to listview adapter class
-                    adapter = new customAdapter(MainActivity.this, arrayList);
+        swap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                swapped();
+                Toast.makeText(MainActivity.this, String.valueOf(s), Toast.LENGTH_SHORT).show();
 
+                if (s == 0) {
+                    Toast.makeText(MainActivity.this, "List word changed to Orommiffa", Toast.LENGTH_SHORT).show();
                     //bind the adapter to the listview
                     list.setAdapter(adapter);
+                    amh.setText("Oromiffa");
+                    orom.setText("አማረኛ");
+                    search.setQueryHint("Afaan oromiffatti barbaadi ....");
+
+                    setisWchanged(true);
+
+                } else {
+                    Toast.makeText(MainActivity.this, "List word changed to Amharic", Toast.LENGTH_SHORT).show();
+                    //bind the adapter to the listview
+                    list.setAdapter(adapterAmh);
+                    orom.setText("Oromiffa");
+                    amh.setText("አማረኛ");
+                    search.setQueryHint("በ አማረኛ ይፈልጉ ....");
+
+                    setisWchanged(false);
 
                 }
-            });
 
-//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//
-//                Toast.makeText(MainActivity.this, adapter.getMainword() + "********/n" + adapter.getDefinition(), Toast.LENGTH_SHORT).show();
-//
-//
-////                main = view.findViewById(R.id.main);
-////                def = view.findViewById(R.id.definition);
-//
-//                main.setText(adapter.getMainword());
-//                def.setText(adapter.getDefinition());
-//
-//                BottomSheetDialog bsd = new BottomSheetDialog(getApplicationContext(), R.style.BottomSheetDialogTheme);
-//
-//                View bsv = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet, (LinearLayout) view.findViewById(R.id.bottom_sheetContainer));
-//                bsd.setContentView(bsv);
-//                bsd.show();
+            }
+        });
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (TextUtils.isEmpty(s)) {
+                    adapterAmh.filterAm("");
+                    list.clearTextFilter();
+                } else {
+                    adapterAmh.filterAm(s);
+                }
 
 
-//                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//                builder.setCancelable(true);
-//                builder.setTitle(title[i]);
-//                builder.setMessage(desc[i]);
-//                builder.show();
-
-
-//                Bundle bundle = new Bundle();
-//
-//                bundle.putString("main", title[i]);
-//                bundle.putString("def", desc[i]);
-//
-//                def.setArguments(bundle);
-//
-//                FragmentTransaction ft = fm.beginTransaction();
-//                ft.replace(R.id.container, def);
-//
-//                ft.commit();
-
-//                getSupportFragmentManager().beginTransaction().replace(R.id.container, new definition()).commit();
-
-
-//            }
-//        });
-
+                return true;
+            }
+        });
 
         BottomNavigationView bottomview = findViewById(R.id.bottom_nav);
         bottomview.setOnNavigationItemSelectedListener(navlistener);
 
+    }
+
+    public void setisWchanged(boolean wchanged){
+        this.Wchanged=wchanged;
+    }
+    public boolean getWchanged(){
+        return this.Wchanged;
     }
 
     @Override
@@ -256,18 +159,15 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String s) {
 
                 if (TextUtils.isEmpty(s)) {
-                    adapter.filter("No matching word for " + s);
+                    adapter.filter( s);
                     list.clearTextFilter();
                 } else {
                     adapter.filter(s);
                 }
-
-
                 return true;
             }
+
         });
-
-
         return true;
     }
 
@@ -280,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
             //TODO functionality to be defined here
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -299,39 +198,29 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.about:
 
                             Toast.makeText(MainActivity.this, "Will have information about the developers", Toast.LENGTH_SHORT).show();
+                            Intent intentAbout = new Intent(MainActivity.this,About.class);
+                            startActivity(intentAbout);
+
                             break;
                         case R.id.favv:
                             findViewById(R.id.favv).setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Red)));
                             Toast.makeText(MainActivity.this, "You will get your favourite words with their definintion here ", Toast.LENGTH_SHORT).show();
+
+                            Intent intentFavourite = new Intent(MainActivity.this,Favourites.class);
+                            startActivity(intentFavourite);
                             break;
                     }
-//                    getSupportFragmentManager().beginTransaction().replace(androidx.appcompat.R.id.action_bar_container,selected).commit();
                     return true;
                 }
             };
-//    public FragmentTransaction FragmentControl(String main,String def){
-//
-//        fm=getSupportFragmentManager();
-//        definition=new definition();
-//
-//
-//
-//        Bundle bundle= new Bundle();
-//
-//        bundle.putString("main",main);
-//        bundle.putString("def",def);
-//
-//        definition.setArguments(bundle);
-//
-//        FragmentTransaction ft = fm.beginTransaction();
-////        ft.commit();
-//
-////        fragmentTransaction.addToBackStack("tag");
-//
-//
-//
-//        return fragmentTransaction;
-//    }
 
+    public int swapped(){
+                if(s==0){
+                   this.s=1;
+                }else {
+                    this.s=0;
+                }
+   return this.s;
+    }
 }
 //design row of list
