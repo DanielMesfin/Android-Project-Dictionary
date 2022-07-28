@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid android:color="#FA6ADC39" />
+    <corners android:topRightRadius="1dp" android:topLeftRadius="1dp"/>
+    <stroke android:color="@color/icons_color" android:width="1dp" android:dashGap="2dp" android:dashWidth="3dp" />
+<!--    <gradient android:angle="@integer/material_motion_duration_long_2" android:centerColor="@color/yellow" android:centerX="@integer/material_motion_duration_long_1" android:centerY="@integer/material_motion_duration_medium_1" android:endColor="@color/yellow" android:startColor="@color/black" android:useLevel="false" android:gradientRadius="@integer/material_motion_duration_long_1" />-->
+</shape>

@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Dictionary</string>
+    <string name="app_name">AmharicOrommifa</string>
+    <string name="settings">settings</string>
+    <string name="search">Search</string>
+    <string name="oromiffa">Oromiffa</string>
+    <string name="amharic">አማረኛ</string>
 </resources>

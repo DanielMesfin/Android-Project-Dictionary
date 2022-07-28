@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="400dp"
+    android:background="@drawable/bg_layout"
+    app:layout_constraintBaseline_toBottomOf="@+id/e"
+    app:layout_constraintBottom_toTopOf="@+id/bottom_nav">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBaseline_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/main"
+        android:paddingStart="40dp">
+
+        <TextView
+            android:id="@+id/mainw"
+            android:layout_width="363dp"
+            android:layout_height="46dp"
+            android:text="main"
+            android:textSize="20dp"
+
+            android:layout_marginTop="40dp"
+            app:layout_constraintBaseline_toTopOf="@+id/def"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/def"
+            android:layout_width="363dp"
+            android:layout_height="37dp"
+            android:text="definition"
+            android:textSize="15dp"
+            app:layout_constraintBaseline_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/mainw" />
+
+    </LinearLayout>
+
+</FrameLayout>
