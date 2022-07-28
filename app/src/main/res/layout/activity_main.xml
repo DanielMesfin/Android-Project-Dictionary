@@ -13,7 +13,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="#A69C9C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
@@ -34,17 +34,10 @@
                 android:layout_marginTop="60dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/bg_layout"
+                android:backgroundTint="#BDB7B7"
                 android:queryHint="Afaan oromiffatti barbaadi ...."
                 tools:ignore="MissingClass" />
 
-            <!--    <android.widget.SearchView-->
-            <!--        android:id="@+id/searchOromiffa"-->
-            <!--        android:layout_width="202dp"-->
-            <!--        android:layout_height="48dp"-->
-            <!--        android:layout_marginTop="60dp"-->
-            <!--        android:background="@drawable/bg_layout"-->
-            <!--        android:queryHint="Search Orommiffa"-->
-            <!--        android:shape="ring" />-->
         </LinearLayout>
 
         <LinearLayout

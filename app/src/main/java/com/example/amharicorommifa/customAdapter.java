@@ -60,11 +60,6 @@ public class customAdapter  extends BaseAdapter{
        this.modelListAmh=modellist;  ////////////////////////
         this.arrayListAmh=new ArrayList<model>();  //////////////////
         this.arrayListAmh.addAll(modelListAmh);  //////////////////////
-       /*TODO : making amharic word searchable   completed **
-                favourite functionality
-                making dialog box responsive @ rendering words
-                modifying interface
-        */
    }
    public  class  ViewHolder { TextView mtitleTv,mDescTv;ImageView fav;}
 
@@ -101,7 +96,8 @@ public class customAdapter  extends BaseAdapter{
             holder.mtitleTv.setText(modellist.get(Position).getTitle());
             holder.mDescTv.setText(modellist.get(Position).getDesc());
 
-      holder.fav=view.findViewById(R.id.favourite1);
+      holder.fav=view.findViewById(R.id.favourite12);
+
 
        res= view.getResources();
        holder.fav.setOnClickListener(new View.OnClickListener() {
@@ -185,20 +181,6 @@ public class customAdapter  extends BaseAdapter{
 
                            }
                        });
-
-//                       if(activity.getWchanged()){
-//                           if(amhBanner.getText().equals("Amaric") && orBanner.getText().equals("Orommifa")) {
-//                               amhBanner.setText("orommiffa");
-//                               orBanner.setText("amharic");
-//                               Toast.makeText(mcontext,"texts changed @ bottom dialog sheet111",Toast.LENGTH_SHORT).show();
-//                           }
-//                           else {
-//                               amhBanner.setText("amharic");
-//                               orBanner.setText("orommiffa");
-//                               Toast.makeText(mcontext,"texts changed @ bottom dialog sheet222",Toast.LENGTH_SHORT).show();
-//                           }
-//
-//                       }
 
                        mainText.setText(mainword);
                        defText.setText(wdefinition);

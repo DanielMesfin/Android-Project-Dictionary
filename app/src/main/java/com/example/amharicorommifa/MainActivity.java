@@ -82,10 +82,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 swapped();
-                Toast.makeText(MainActivity.this, String.valueOf(s), Toast.LENGTH_SHORT).show();
 
                 if (s == 0) {
-                    Toast.makeText(MainActivity.this, "List word changed to Orommiffa", Toast.LENGTH_SHORT).show();
                     //bind the adapter to the listview
                     list.setAdapter(adapter);
                     amh.setText("Oromiffa");
@@ -95,13 +93,11 @@ public class MainActivity extends AppCompatActivity {
                     setisWchanged(true);
 
                 } else {
-                    Toast.makeText(MainActivity.this, "List word changed to Amharic", Toast.LENGTH_SHORT).show();
                     //bind the adapter to the listview
                     list.setAdapter(adapterAmh);
                     orom.setText("Oromiffa");
                     amh.setText("አማረኛ");
                     search.setQueryHint("በ አማረኛ ይፈልጉ ....");
-
                     setisWchanged(false);
 
                 }
@@ -118,10 +114,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 if (TextUtils.isEmpty(s)) {
-                    adapterAmh.filterAm("");
+                    adapter.filter("");
                     list.clearTextFilter();
                 } else {
-                    adapterAmh.filterAm(s);
+                    adapter.filter(s);
                 }
 
 
@@ -193,18 +189,14 @@ public class MainActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
 
                         case R.id.home:
-                            Toast.makeText(MainActivity.this, "Home Clicked", Toast.LENGTH_SHORT).show();
                             break;
                         case R.id.about:
-
-                            Toast.makeText(MainActivity.this, "Will have information about the developers", Toast.LENGTH_SHORT).show();
                             Intent intentAbout = new Intent(MainActivity.this,About.class);
                             startActivity(intentAbout);
 
                             break;
                         case R.id.favv:
                             findViewById(R.id.favv).setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Red)));
-                            Toast.makeText(MainActivity.this, "You will get your favourite words with their definintion here ", Toast.LENGTH_SHORT).show();
 
                             Intent intentFavourite = new Intent(MainActivity.this,Favourites.class);
                             startActivity(intentFavourite);
@@ -222,5 +214,6 @@ public class MainActivity extends AppCompatActivity {
                 }
    return this.s;
     }
+
 }
-//design row of list
+
