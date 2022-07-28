@@ -98,6 +98,7 @@ public class customAdapter  extends BaseAdapter{
 
       holder.fav=view.findViewById(R.id.favourite12);
 
+
        res= view.getResources();
        holder.fav.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -180,6 +181,7 @@ public class customAdapter  extends BaseAdapter{
 
                            }
                        });
+
                        mainText.setText(mainword);
                        defText.setText(wdefinition);
 

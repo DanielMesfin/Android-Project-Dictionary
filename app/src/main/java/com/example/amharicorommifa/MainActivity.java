@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 swapped();
+
                 if (s == 0) {
                     //bind the adapter to the listview
                     list.setAdapter(adapter);
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     amh.setText("አማረኛ");
                     search.setQueryHint("በ አማረኛ ይፈልጉ ....");
                     setisWchanged(false);
+
                 }
 
             }
@@ -195,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case R.id.favv:
                             findViewById(R.id.favv).setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Red)));
+
                             Intent intentFavourite = new Intent(MainActivity.this,Favourites.class);
                             startActivity(intentFavourite);
                             break;
@@ -211,4 +214,6 @@ public class MainActivity extends AppCompatActivity {
                 }
    return this.s;
     }
+
 }
+

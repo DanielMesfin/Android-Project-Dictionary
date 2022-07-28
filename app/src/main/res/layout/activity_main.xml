@@ -37,6 +37,7 @@
                 android:backgroundTint="#BDB7B7"
                 android:queryHint="Afaan oromiffatti barbaadi ...."
                 tools:ignore="MissingClass" />
+
         </LinearLayout>
 
         <LinearLayout
